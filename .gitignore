@@ -1,0 +1,4 @@
+/*.gem
+spec/fixtures/unit/.jekyll-cache
+pkg
+vendor
