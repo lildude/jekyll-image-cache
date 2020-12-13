@@ -2,3 +2,4 @@
 spec/fixtures/unit/.jekyll-cache
 pkg
 vendor
+Gemfile.lock
