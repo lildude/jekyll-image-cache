@@ -8,4 +8,6 @@ task :default => %w(spec)
 
 RSpec::Core::RakeTask.new(:spec)
 
-RuboCop::RakeTask.new(:rubocop)
+RuboCop::RakeTask.new(:rubocop) do |t|
+  t.options = ["--fail-fast"]
+end
