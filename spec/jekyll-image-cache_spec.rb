@@ -83,7 +83,7 @@ RSpec.describe(Jekyll::ImageCache) do
 
       it "changes relative src to cached url" do
         expect(post_with_relative_img.output).to include(<<~HTML)
-        <p><img src="//images.weserv.nl/?url=example.com/imgs/example.png&amp;w=640" alt="alt" class="u-photo"></p>
+          <p><img src="//images.weserv.nl/?url=example.com/imgs/example.png&amp;w=640" alt="alt" class="u-photo"></p>
         HTML
       end
     end
