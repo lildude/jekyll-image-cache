@@ -23,6 +23,10 @@ RSpec.describe(Jekyll::ImageCache) do
     find_by_title(posts, "Post with cached html <img> tag")
   end
 
+  let(:post_with_relative_img) do
+    find_by_title(posts, "Post with relative img url")
+  end
+
   let(:document_with_liquid_tag) do
     find_by_title(site.collections["docs"].docs, "Document with liquid tag")
   end
@@ -74,6 +78,12 @@ RSpec.describe(Jekyll::ImageCache) do
       it "changes src to cached url" do
         expect(document_with_liquid_tag.output).to include(<<~HTML)
           <p>This <img src="/docs/document-with-liquid-tag.html"> is an image with a liquid tag.</p>
+        HTML
+      end
+
+      it "changes relative src to cached url" do
+        expect(post_with_relative_img.output).to include(<<~HTML)
+          <p><img src="//images.weserv.nl/?url=example.com/imgs/example.png&amp;w=640" alt="alt" class="u-photo"></p>
         HTML
       end
     end
