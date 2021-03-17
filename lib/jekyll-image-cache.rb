@@ -5,7 +5,10 @@ require "nokogiri"
 
 module Jekyll
   class ImageCache
+    extend Jekyll::Filters::URLFilters
+
     def self.process(content)
+      @context ||= Context.new(content.site)
       html = content.output
       content.output = process_tags(html) if process_tags?(html)
     end
@@ -25,7 +28,7 @@ module Jekyll
       tags = content.css("img[src].u-photo")
       # TODO: Make the cache service and size configurable
       tags.each do |tag|
-        orig_url = tag["src"].sub(%r!https?://!, "")
+        orig_url = absolute_url(tag["src"]).sub(%r!https?://!, "")
         unless orig_url.include? "images.weserv.nl"
           tag["src"] = "//images.weserv.nl/?url=#{orig_url}&w=640"
         end
@@ -35,6 +38,18 @@ module Jekyll
 
     private_class_method :process_tags
     private_class_method :process_tags?
+  end
+
+  class Context
+    attr_reader :site
+
+    def initialize(site)
+      @site = site
+    end
+
+    def registers
+      { :site => site }
+    end
   end
 end
 
